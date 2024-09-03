@@ -7,9 +7,6 @@ import fastf1 as ff1
 from matplotlib.collections import LineCollection
 import matplotlib.patches as patches
 
-ff1.Cache.clear_cache('F1Cache')
-ff1.Cache.enable_cache('F1Cache')
-
 @st.cache_data
 def load_data(year, location):
     """Load session data with caching."""
