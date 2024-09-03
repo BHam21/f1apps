@@ -57,7 +57,8 @@ compound_color = {    'SOFT': '#FF0000',          # Red
     'UNKNOWN': '#000000',       # Black
     'SUPERSOFT': '#800080',     # Purple
     'ULTRASOFT': '#FFA500',     # Orange
-    'nan': '#00008B'            # Dark Blue}
+    'nan': '#00008B'            # Dark Blue 
+                 }
 
 laps['Compound_Color'] = laps['Compound'].map(compound_color)
 
