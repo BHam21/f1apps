@@ -26,19 +26,45 @@ laps = session.laps.copy()
 results = session.results
 race = session
 
-laps['LapTime_seconds'] = laps['LapTime'].dt.total_seconds()
-laps = laps[laps['LapNumber'] != 1].dropna(subset=['LapTime_seconds'])
+for lap in range(5):
+    #turn LapTime into seconds from DD:HH:MM:SS
+    laps['LapTime_seconds'] = laps['LapTime'].dt.total_seconds()
 
-laptimemean = laps['LapTime_seconds'].mean()
-laptimestd = laps['LapTime_seconds'].std()
-laps = laps[laps['LapTime_seconds'] < (laptimemean + 3 * laptimestd)]
+    #drop all rows with NaN in LapTime_seconds
+    laps = laps.dropna(subset=['LapTime_seconds'])
 
-for sector in ['Sector1Time', 'Sector2Time', 'Sector3Time']:
-    laps[f'{sector}_seconds'] = laps[sector].dt.total_seconds()
-    laps = laps.dropna(subset=[f'{sector}_seconds'])
-    sector_mean = laps[f'{sector}_seconds'].mean()
-    sector_std = laps[f'{sector}_seconds'].std()
-    laps = laps[laps[f'{sector}_seconds'] < (sector_mean + 3 * sector_std)]
+    laptimemean=laps['LapTime_seconds'].mean()
+    laptimestd=laps['LapTime_seconds'].std()
+
+    #drop all rows in laps with LapTime_seconds 3 std greater than the mean lap time
+    laps = laps[laps['LapTime_seconds'] < (laptimemean + 3*laptimestd)]
+    
+
+    #doing the same for Sector1Time, Sector2Time, Sector3Time
+    laps['Sector1Time_seconds'] = laps['Sector1Time'].dt.total_seconds()
+    laps = laps.dropna(subset=['Sector1Time_seconds'])
+    laps['Sector2Time_seconds'] = laps['Sector2Time'].dt.total_seconds()
+    laps = laps.dropna(subset=['Sector2Time_seconds'])
+    laps['Sector3Time_seconds'] = laps['Sector3Time'].dt.total_seconds()
+    laps = laps.dropna(subset=['Sector3Time_seconds'])
+    
+    #finding the mean and std of the Sector times
+    sector1mean=laps['Sector1Time_seconds'].mean()
+    sector1std=laps['Sector1Time_seconds'].std()
+    sector2mean=laps['Sector2Time_seconds'].mean()
+    sector2std=laps['Sector2Time_seconds'].std()
+    sector3mean=laps['Sector3Time_seconds'].mean()
+    sector3std=laps['Sector3Time_seconds'].std()
+
+    #drop all rows in laps with Sector1Time 3 std greater than the mean sector time
+    laps = laps[laps['Sector1Time_seconds'] < (sector1mean + 3*sector1std)]
+    #drop all rows in laps with Sector2Time 3 std greater than the mean sector time
+    laps = laps[laps['Sector2Time_seconds'] < (sector2mean + 3*sector2std)]
+    #drop all rows in laps with Sector3Time 3 std greater than the mean sector time
+    laps = laps[laps['Sector3Time_seconds'] < (sector3mean + 3*sector3std)]
+
+#list of drivers initials
+drivers=['ver','ham','gas','lec','alo','sai','oco','nor','vet','zho','rus','tsu','lat','mag','msc','ric','sto','bot','per','alb']
 
 laps["LapTime_fuelCorrected"] = laps["LapTime_seconds"] - (
     3.3 * (laps["LapNumber"].max() - laps["LapNumber"]) / laps["LapNumber"].max()
