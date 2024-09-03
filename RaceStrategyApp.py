@@ -49,19 +49,16 @@ plt.rcParams['figure.figsize'] = [6, 6]
 plt.rcParams['font.family'] = 'serif'
 plt.style.use('dark_background')
 
-compound_color = {'SOFT': '#FF0000', 'MEDIUM': '#FFEF00', 'HARD': '#E5E4E2', 'INTERMEDIATE': '#008000', 'WET': '#0000FF', 'UNKNOWN': '#000000'}
-# Handle any missing compounds by adding them with random colors
-unique_compounds = laps['Compound'].unique()
-for compound in unique_compounds:
-    if compound not in compound_color:
-        # Generate a random color in hex format
-        compound_color[compound] = "#{:06x}".format(random.randint(0, 0xFFFFFF))
+compound_color = {    'SOFT': '#FF0000',          # Red
+    'MEDIUM': '#FFEF00',        # Yellow
+    'HARD': '#E5E4E2',          # Light Grey
+    'INTERMEDIATE': '#008000',  # Green
+    'WET': '#0000FF',           # Blue
+    'UNKNOWN': '#000000',       # Black
+    'SUPERSOFT': '#800080',     # Purple
+    'ULTRASOFT': '#FFA500',     # Orange
+    'nan': '#00008B'            # Dark Blue}
 
-# Replace NaN compounds with a default or random color (optional)
-if 'nan' in compound_color:
-    compound_color['nan'] = '#808080'  # Grey or any preferred color
-
-laps['Compound_Color'] = laps['Compound'].map(compound_color)
 laps['Compound_Color'] = laps['Compound'].map(compound_color)
 
 fig, ax = plt.subplots()
