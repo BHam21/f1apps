@@ -98,7 +98,7 @@ fig, ax = plt.subplots()
 sns.scatterplot(x='LapNumber', y='Driver', data=laps, hue='Compound', palette=compound_color, s=60, marker='o', ax=ax)
 sns.scatterplot(x='LapNumber', y='Driver', data=laps[laps['IsPitStop']], color='blue', s=100, marker='|', linewidth=1.5, ax=ax)
 
-ax.set_title(f'Tyre Strategy | {race.name} {race.year}', fontsize=18, fontweight='bold', color='white')
+ax.set_title(f'Tyre Strategy | {race.name} {race.date}', fontsize=18, fontweight='bold', color='white')
 ax.set_xlabel('Lap Number', fontsize=15, fontweight='bold', color='white')
 ax.set_ylabel('Driver', fontsize=15, fontweight='bold', color='white')
 ax.tick_params(labelsize=6, color='white')
