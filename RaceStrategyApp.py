@@ -93,6 +93,6 @@ plt.rcParams['figure.dpi'] = 300
 
 #kde plot to show distribution of lap times for each compound
 sns.kdeplot(data=laps,x='LapTime_fuelCorrected',hue='Compound',palette=compound_color,fill=True,common_norm=False,linewidth=1.5)
-plt.title(f'Tyre Life by Compound | {race.weekend.name} {race.weekend.year}', fontsize=15, fontweight='bold',color='White')
+plt.title(f'Tyre Life by Compound | {race.name} {race.date}', fontsize=15, fontweight='bold',color='White')
 plt.xlabel('Fuel Adjusted Lap Times (seconds)', fontsize=10, fontweight='bold',color='white')
 plt.ylabel('Tyre Compound', fontsize=10, fontweight='bold',color='White')
