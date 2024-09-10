@@ -39,15 +39,6 @@ for lap in range(5):
     #drop all rows in laps with LapTime_seconds 3 std greater than the mean lap time
     laps = laps[laps['LapTime_seconds'] < (laptimemean + 3*laptimestd)]
     
-
-    #doing the same for Sector1Time, Sector2Time, Sector3Time
-    laps['Sector1Time_seconds'] = laps['Sector1Time'].dt.total_seconds()
-    laps = laps.dropna(subset=['Sector1Time_seconds'])
-    laps['Sector2Time_seconds'] = laps['Sector2Time'].dt.total_seconds()
-    laps = laps.dropna(subset=['Sector2Time_seconds'])
-    laps['Sector3Time_seconds'] = laps['Sector3Time'].dt.total_seconds()
-    laps = laps.dropna(subset=['Sector3Time_seconds'])
-    
     #finding the mean and std of the Sector times
     sector1mean=laps['Sector1Time_seconds'].mean()
     sector1std=laps['Sector1Time_seconds'].std()
