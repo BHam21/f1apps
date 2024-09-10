@@ -4,3 +4,4 @@ numpy
 seaborn
 matplotlib
 fastf1
+python==3.10
