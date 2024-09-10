@@ -14,7 +14,7 @@ def load_data(year, location):
     session.load()
     return session
 
-st.sidebar.title("F1 Tyre Strategy Visualization")
+st.sidebar.title("F1 Tyre Degradation Visualization")
 selected_year = st.sidebar.selectbox('Select Year', range(2018, 2024))
 selected_location = st.sidebar.selectbox('Select Location', [
     'Austria', 'Hungary', 'Italy', 'Belgium', 'Netherlands', 
@@ -70,38 +70,16 @@ laps["LapTime_fuelCorrected"] = laps["LapTime_seconds"] - (
     3.3 * (laps["LapNumber"].max() - laps["LapNumber"]) / laps["LapNumber"].max()
 )
 
-plt.rcParams['figure.dpi'] = 300
-plt.rcParams['figure.figsize'] = [6, 6]
+plt.rcParams['figure.figsize'] = (20, 10)
 plt.rcParams['font.family'] = 'serif'
 plt.style.use('dark_background')
+plt.rcParams['figure.dpi'] = 300
 
-compound_color = {    'SOFT': '#FF0000',          # Red
-    'MEDIUM': '#FFEF00',        # Yellow
-    'HARD': '#E5E4E2',          # Light Grey
-    'INTERMEDIATE': '#008000',  # Green
-    'WET': '#0000FF',           # Blue
-    'UNKNOWN': '#000000',       # Black
-    'SUPERSOFT': '#800080',     # Purple
-    'ULTRASOFT': '#FFA500',     # Orange
-    'nan': '#00008B'            # Dark Blue 
-                 }
-#make a new column called IsPitStop and set it to True any time the Driver changes Stint number except for the first lap
-laps['IsPitStop']=laps['Stint'].diff()!=0
-laps.loc[laps['LapNumber']==1,'IsPitStop']=False
-
-#change LapNumber 1 to False
-laps.loc[laps['LapNumber']==1,'IsPitStop']=False
-
-laps['Compound_Color'] = laps['Compound'].map(compound_color)
-
-fig, ax = plt.subplots()
-sns.scatterplot(x='LapNumber', y='Driver', data=laps, hue='Compound', palette=compound_color, s=60, marker='o', ax=ax)
-sns.scatterplot(x='LapNumber', y='Driver', data=laps[laps['IsPitStop']], color='blue', s=100, marker='|', linewidth=1.5, ax=ax)
-
-ax.set_title(f'Tyre Strategy | {race.name} {race.date}', fontsize=18, fontweight='bold', color='white')
-ax.set_xlabel('Lap Number', fontsize=15, fontweight='bold', color='white')
-ax.set_ylabel('Driver', fontsize=15, fontweight='bold', color='white')
-ax.tick_params(labelsize=6, color='white')
-#default bbox is .7
-plt.legend(bbox_to_anchor=(.15, -.05), loc="lower center", ncol=laps['Compound'].nunique(), frameon=False, fontsize=10)
-st.pyplot(fig)
+#line plot showing LapTime_seconds on y axis and TyreLife on the x axis
+sns.lineplot(data=laps,x='TyreLife',y='LapTime_seconds',hue='Compound',palette=compound_color,linewidth=3,err_style=None)
+plt.title(f'Tyre Degradation | {race.name} {race.date}', fontsize=40, fontweight='bold',color='White')
+plt.xlabel('Tyre Life (laps)', fontsize=20, fontweight='bold',color='white')
+plt.ylabel('Smoothed Lap Times (seconds)', fontsize=20, fontweight='bold',color='White')
+plt.legend(loc=1, prop={'size': 20})
+plt.tick_params(labelsize=15)
+plt.locator_params('x',nbins = 20)
