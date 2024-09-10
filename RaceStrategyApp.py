@@ -38,21 +38,6 @@ for lap in range(5):
 
     #drop all rows in laps with LapTime_seconds 3 std greater than the mean lap time
     laps = laps[laps['LapTime_seconds'] < (laptimemean + 3*laptimestd)]
-    
-    #finding the mean and std of the Sector times
-    sector1mean=laps['Sector1Time_seconds'].mean()
-    sector1std=laps['Sector1Time_seconds'].std()
-    sector2mean=laps['Sector2Time_seconds'].mean()
-    sector2std=laps['Sector2Time_seconds'].std()
-    sector3mean=laps['Sector3Time_seconds'].mean()
-    sector3std=laps['Sector3Time_seconds'].std()
-
-    #drop all rows in laps with Sector1Time 3 std greater than the mean sector time
-    laps = laps[laps['Sector1Time_seconds'] < (sector1mean + 3*sector1std)]
-    #drop all rows in laps with Sector2Time 3 std greater than the mean sector time
-    laps = laps[laps['Sector2Time_seconds'] < (sector2mean + 3*sector2std)]
-    #drop all rows in laps with Sector3Time 3 std greater than the mean sector time
-    laps = laps[laps['Sector3Time_seconds'] < (sector3mean + 3*sector3std)]
 
 #list of drivers initials
 drivers=['ver','ham','gas','lec','alo','sai','oco','nor','vet','zho','rus','tsu','lat','mag','msc','ric','sto','bot','per','alb']
