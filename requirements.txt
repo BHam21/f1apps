@@ -4,3 +4,4 @@ numpy
 seaborn
 matplotlib
 fastf1
+fastf1.plotting
