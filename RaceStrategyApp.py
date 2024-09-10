@@ -103,5 +103,5 @@ ax.set_xlabel('Lap Number', fontsize=15, fontweight='bold', color='white')
 ax.set_ylabel('Driver', fontsize=15, fontweight='bold', color='white')
 ax.tick_params(labelsize=6, color='white')
 #default bbox is .7
-plt.legend(bbox_to_anchor=(.7, 0), loc="lower center", ncol=laps['Compound'].nunique(), frameon=False, fontsize=10)
+plt.legend(bbox_to_anchor=(.01, 0), loc="lower center", ncol=laps['Compound'].nunique(), frameon=False, fontsize=10)
 st.pyplot(fig)
