@@ -45,31 +45,35 @@ drivers=['ver','ham','gas','lec','alo','sai','oco','nor','vet','zho','rus','tsu'
 laps["LapTime_fuelCorrected"] = laps["LapTime_seconds"] - (
     3.3 * (laps["LapNumber"].max() - laps["LapNumber"]) / laps["LapNumber"].max()
 )
+# Assuming session data has been loaded into the `session` variable
+fig, ax = plt.subplots(figsize=(8.0, 4.9))
 
-#making a dictionary for colors based off of the unique tyre compound
-compound_color = {
-    'SOFT': '#FF0000',
-    'MEDIUM': '#FFEF00',
-    'HARD': '#E5E4E2',
-    'INTERMEDIATE': '#008000',
-    'WET': '#0000FF',
-    'UNKNOWN': '#000000',
-    'SUPERSOFT': '#FF1493',  # Example: Deep Pink color for SUPERSOFT
-    'ULTRASOFT': '#9400D3',  # Example: Dark Violet color for ULTRASOFT
-    'nan': '#808080'  # Gray color to represent NaN values
-}
+# Loop through all drivers in the session
+for drv in session.drivers:
+    drv_laps = session.laps.pick_driver(drv)
 
-#change UNKNOW in the laps dataframe to SOFT
-laps.loc[laps['Compound']=='UNKNOWN','Compound']='UNKNOWN'
+    # Get the driver's abbreviation
+    abb = drv_laps['Driver'].iloc[0]
 
-plt.rcParams['figure.figsize'] = (20, 10)
-plt.rcParams['font.family'] = 'serif'
-plt.style.use('dark_background')
-plt.rcParams['figure.dpi'] = 300
+    # Get driver-specific style (color and linestyle)
+    style = ff1.plotting.get_driver_style(identifier=abb,
+                                          style=['color', 'linestyle'],
+                                          session=session)
 
-#kde plot to show distribution of lap times for each compound
-sns.kdeplot(data=laps,x='LapTime_fuelCorrected',hue='Compound',palette=compound_color,fill=True,common_norm=False,linewidth=1.5)
-plt.title(f'Tyre Life by Compound | {race.name} {race.date}', fontsize=15, fontweight='bold',color='White')
-plt.xlabel('Fuel Adjusted Lap Times (seconds)', fontsize=10, fontweight='bold',color='white')
-plt.ylabel('Tyre Compound', fontsize=10, fontweight='bold',color='White')
+    # Plot lap number vs position for each driver
+    ax.plot(drv_laps['LapNumber'], drv_laps['Position'],
+            label=abb, **style)
+
+# Set axis limits and labels
+ax.set_ylim([20.5, 0.5])  # Reversed to show position in ascending order (1st at the top)
+ax.set_yticks([1, 5, 10, 15, 20])
+ax.set_xlabel('Lap', fontsize=12)
+ax.set_ylabel('Position', fontsize=12)
+
+# Set legend and layout
+ax.legend(bbox_to_anchor=(1.0, 1.02), title='Driver', loc='upper left', fontsize=10)
+plt.tight_layout()
+
+# Show the plot
+plt.show()
 plt.show()
