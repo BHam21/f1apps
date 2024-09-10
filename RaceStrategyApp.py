@@ -21,7 +21,7 @@ selected_location = st.sidebar.selectbox('Select Location', [
     'Great Britain', 'Japan', 'Monaco', 'Spain', 'United States'
 ])
 
-session = get_session(selected_year, selected_location)
+session = load_data(selected_year, selected_location)
 laps = session.laps.copy()
 results = session.results
 race = session
