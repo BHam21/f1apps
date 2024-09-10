@@ -70,6 +70,12 @@ laps["LapTime_fuelCorrected"] = laps["LapTime_seconds"] - (
     3.3 * (laps["LapNumber"].max() - laps["LapNumber"]) / laps["LapNumber"].max()
 )
 
+#making a dictionary for colors based off of the unique tyre compound
+compound_color={'SOFT':'#FF0000','MEDIUM':'#FFEF00','HARD':'#E5E4E2','INTERMEDIATE':'#008000','WET':'#0000FF','UNKNOWN':'#000000'}
+
+#change UNKNOW in the laps dataframe to SOFT
+laps.loc[laps['Compound']=='UNKNOWN','Compound']='UNKNOWN'
+
 plt.rcParams['figure.figsize'] = (20, 10)
 plt.rcParams['font.family'] = 'serif'
 plt.style.use('dark_background')
