@@ -102,6 +102,6 @@ ax.set_title(f'Tyre Strategy | {race.name} {race.date}', fontsize=18, fontweight
 ax.set_xlabel('Lap Number', fontsize=15, fontweight='bold', color='white')
 ax.set_ylabel('Driver', fontsize=15, fontweight='bold', color='white')
 ax.tick_params(labelsize=6, color='white')
-
-plt.legend(bbox_to_anchor=(.15, 0), loc="lower center", ncol=laps['Compound'].nunique(), frameon=False, fontsize=10)
+#default bbox is .7
+plt.legend(bbox_to_anchor=(.7, 0), loc="lower center", ncol=laps['Compound'].nunique(), frameon=False, fontsize=10)
 st.pyplot(fig)
