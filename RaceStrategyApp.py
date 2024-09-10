@@ -85,6 +85,12 @@ compound_color = {    'SOFT': '#FF0000',          # Red
     'ULTRASOFT': '#FFA500',     # Orange
     'nan': '#00008B'            # Dark Blue 
                  }
+#make a new column called IsPitStop and set it to True any time the Driver changes Stint number except for the first lap
+laps['IsPitStop']=laps['Stint'].diff()!=0
+laps.loc[laps['LapNumber']==1,'IsPitStop']=False
+
+#change LapNumber 1 to False
+laps.loc[laps'LapNumber']==1,'IsPitStop']=False
 
 laps['Compound_Color'] = laps['Compound'].map(compound_color)
 
