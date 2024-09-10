@@ -71,7 +71,17 @@ laps["LapTime_fuelCorrected"] = laps["LapTime_seconds"] - (
 )
 
 #making a dictionary for colors based off of the unique tyre compound
-compound_color={'SOFT':'#FF0000','MEDIUM':'#FFEF00','HARD':'#E5E4E2','INTERMEDIATE':'#008000','WET':'#0000FF','UNKNOWN':'#000000'}
+compound_color = {
+    'SOFT': '#FF0000',
+    'MEDIUM': '#FFEF00',
+    'HARD': '#E5E4E2',
+    'INTERMEDIATE': '#008000',
+    'WET': '#0000FF',
+    'UNKNOWN': '#000000',
+    'SUPERSOFT': '#FF1493',  # Example: Deep Pink color for SUPERSOFT
+    'ULTRASOFT': '#9400D3',  # Example: Dark Violet color for ULTRASOFT
+    'nan': '#808080'  # Gray color to represent NaN values
+}
 
 #change UNKNOW in the laps dataframe to SOFT
 laps.loc[laps['Compound']=='UNKNOWN','Compound']='UNKNOWN'
