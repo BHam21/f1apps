@@ -91,11 +91,8 @@ plt.rcParams['font.family'] = 'serif'
 plt.style.use('dark_background')
 plt.rcParams['figure.dpi'] = 300
 
-#line plot showing LapTime_seconds on y axis and TyreLife on the x axis
-sns.lineplot(data=laps,x='TyreLife',y='LapTime_seconds',hue='Compound',palette=compound_color,linewidth=3,err_style=None)
-plt.title(f'Tyre Degradation | {race.name} {race.date}', fontsize=40, fontweight='bold',color='White')
-plt.xlabel('Tyre Life (laps)', fontsize=20, fontweight='bold',color='white')
-plt.ylabel('Smoothed Lap Times (seconds)', fontsize=20, fontweight='bold',color='White')
-plt.legend(loc=1, prop={'size': 20})
-plt.tick_params(labelsize=15)
-plt.locator_params('x',nbins = 20)
+#kde plot to show distribution of lap times for each compound
+sns.kdeplot(data=laps,x='LapTime_fuelCorrected',hue='Compound',palette=compound_color,fill=True,common_norm=False,linewidth=1.5)
+plt.title(f'Tyre Life by Compound | {race.weekend.name} {race.weekend.year}', fontsize=15, fontweight='bold',color='White')
+plt.xlabel('Fuel Adjusted Lap Times (seconds)', fontsize=10, fontweight='bold',color='white')
+plt.ylabel('Tyre Compound', fontsize=10, fontweight='bold',color='White')
