@@ -72,3 +72,4 @@ sns.kdeplot(data=laps,x='LapTime_fuelCorrected',hue='Compound',palette=compound_
 plt.title(f'Tyre Life by Compound | {race.name} {race.date}', fontsize=15, fontweight='bold',color='White')
 plt.xlabel('Fuel Adjusted Lap Times (seconds)', fontsize=10, fontweight='bold',color='white')
 plt.ylabel('Tyre Compound', fontsize=10, fontweight='bold',color='White')
+plt.show()
